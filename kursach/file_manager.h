@@ -20,6 +20,8 @@ public:
 	int write(Lecturer &item);
 	int read(std::vector<Group> &list);
 	int read(std::vector<Lecturer> &list);
+	int empty(std::string file_name);
+	int create(std::string file_name);
 
 };
 

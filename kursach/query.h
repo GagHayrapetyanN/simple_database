@@ -18,6 +18,10 @@ private:
 
 	std::string upper(const std::string &str);
 
+	void write_query();
+	void print_vector();
+	int parse_query();
+
 	int add();
 	int select();
 	int del();
@@ -30,10 +34,7 @@ private:
 public:
 	QueryParser();
 
-	void write_query();
-	void print_vector();
-	int parse_query();
-	
+	void run();
 };
 
 

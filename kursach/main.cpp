@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include "query.h"
-#include "group.h"
 
 
 int main()
@@ -10,11 +9,10 @@ int main()
 	
 	while (true)
 	{
-		x.write_query();
-
-		x.parse_query();
+		std::cout << "Enter Query: \n";
+		x.run();
+		std::cout << "\n";
 	}
-
 
 }
 

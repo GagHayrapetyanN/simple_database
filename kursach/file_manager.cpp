@@ -2,6 +2,30 @@
 
 FileManager::FileManager()
 {
+	create("group");
+	create("lecturer");
+}
+
+int FileManager::create(std::string file_name)
+{
+	std::ofstream file(file_name);
+	file.close();
+
+	return 0;
+}
+
+int FileManager::empty(std::string file_name)
+{
+	std::ofstream file;
+	file.open(file_name, std::ofstream::out | std::ofstream::trunc);
+
+	if (!file)
+	{
+		std::cout << "File Error:\n";
+		return 1;
+	}
+
+	file.close();
 }
 
 int FileManager::get_file_size(std::fstream &f)

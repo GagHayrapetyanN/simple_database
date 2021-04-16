@@ -4,6 +4,12 @@ QueryParser::QueryParser()
 {
 }
 
+void QueryParser::run()
+{
+	write_query();
+	parse_query();
+}
+
 void QueryParser::print_vector()
 {
 	for (int i = 0; i < query.size(); i++)
@@ -245,15 +251,9 @@ int QueryParser::add()
 	std::string table_name, item;
 	int index, error = 0;
 
-	if (get_table_name(table_name, index))
-	{
-		return 1;
-	}
-
-	if (index != query.size() - 1 || check_table_name(table_name))
-	{
-		return 1;
-	}
+	error += get_table_name(table_name, index);
+	error += (index != query.size() - 1);
+	error += check_table_name(table_name);
 
 	if (table_name == "group")
 	{
@@ -277,20 +277,9 @@ int QueryParser::select()
 	int index, error = 0;
 	Maptype condition;
 
-	if (get_table_name(table_name, index))
-	{
-		return 1;
-	}
-
-	if (check_table_name(table_name))
-	{
-		return 1;
-	}
-	
-	if (get_condition(index, condition))
-	{
-		return 1;
-	}
+	error += get_table_name(table_name, index);
+	error += check_table_name(table_name);
+	error += get_condition(index, condition);
 
 	if (table_name == "group")
 	{
@@ -340,20 +329,9 @@ int QueryParser::del()
 	int index, error = 0;
 	Maptype condition;
 
-	if (get_table_name(table_name, index))
-	{
-		return 1;
-	}
-
-	if (check_table_name(table_name))
-	{
-		return 1;
-	}
-
-	if (get_condition(index, condition))
-	{
-		return 1;
-	}
+	error += get_table_name(table_name, index);
+	error += check_table_name(table_name);
+	error += get_condition(index, condition);
 
 	if (table_name == "group")
 	{
@@ -365,7 +343,7 @@ int QueryParser::del()
 		std::vector<Group> gr_list;
 		error += file.read(gr_list);
 
-		remove("group");
+		file.empty("group");
 		for (int i = 0; i < gr_list.size(); i++)
 		{
 			if (gr_list[i].filter(condition))
@@ -389,7 +367,7 @@ int QueryParser::del()
 		std::vector<Lecturer> le_list;
 		error += file.read(le_list);
 
-		remove("group");
+		file.empty("lecturer");
 
 		for (int i = 0; i < le_list.size(); i++)
 		{
