@@ -1,0 +1,7 @@
+﻿  group.cpp
+d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\group.cpp(15): warning C4805: '|=': unsafe mix of type 'int' and type 'bool' in operation
+  lecturer.cpp
+d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\lecturer.cpp(15): warning C4805: '|=': unsafe mix of type 'int' and type 'bool' in operation
+  Generating Code...
+  LINK : D:\Internet Explorer\Inistut\Magistratura\c++\simple_database\x64\Debug\kursach.exe not found or not built by the last incremental link; performing full link
+  kursach.vcxproj -> D:\Internet Explorer\Inistut\Magistratura\c++\simple_database\x64\Debug\kursach.exe

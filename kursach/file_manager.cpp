@@ -14,9 +14,10 @@ int FileManager::get_file_size(std::fstream &f)
 	return size;
 }
 
-int FileManager::append(Group &item)
+int FileManager::write(Group &item)
 {
 	std::ofstream file;
+
 	file.open("group", std::ios::app | std::ios::binary);
 
 	if (!file)
@@ -30,7 +31,7 @@ int FileManager::append(Group &item)
 	file.close();
 }
 
-int FileManager::append(Lecturer &item)
+int FileManager::write(Lecturer &item)
 {
 	std::ofstream file;
 	file.open("lecturer", std::ios::app | std::ios::binary);

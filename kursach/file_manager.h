@@ -16,8 +16,8 @@ private:
 public:
 	FileManager();
 	
-	int append(Group &item);
-	int append(Lecturer &item);
+	int write(Group &item);
+	int write(Lecturer &item);
 	int read(std::vector<Group> &list);
 	int read(std::vector<Lecturer> &list);
 

@@ -60,7 +60,8 @@ int QueryParser::parse_query()
 	}
 	else
 	{
-		return 1;
+		std::cout << "Incorect command: \n";
+		error++;
 	}
 	
 	return error;
@@ -68,6 +69,7 @@ int QueryParser::parse_query()
 
 int QueryParser::get_table_name(std::string & table_name, int &index)
 {
+	int error = 0;
 	std::string item, tmp="";
 	int item_count, total_count=0, count=0;
 	for (int i = 1; i < query.size(); i++)
@@ -79,7 +81,8 @@ int QueryParser::get_table_name(std::string & table_name, int &index)
 
 		if ((i == 1 && (item_count == 0 || item_count > 2))|| total_count > 2)
 		{
-			return 1;
+			error = 1;
+			break;
 		}
 
 		tmp += item;
@@ -89,40 +92,51 @@ int QueryParser::get_table_name(std::string & table_name, int &index)
 			if (tmp.size() != 2)
 			{
 				index = i;
+				count = 0;
 				table_name = tmp.substr(1, tmp.size() - 2);
-				return 0;
+				break;
 			}
 			else
 			{
-				return 1;
+				error = 1;
+				break;
 			}
 		}
 	}
 
 	if (count > 0)
 	{
-		return 1;
+		error = 1;
 	}
 
-	return 0;
+	if (error)
+	{
+		std::cout << "Incorect table name:\n";
+	}
+
+	return error;
 }
 
 int QueryParser::check_table_name(const std::string &table_name)
 {
-	if (table_name == "group" || table_name == "lecturer")
+	int error = 0;
+
+	if (!(table_name == "group" || table_name == "lecturer"))
 	{
-		return 0;
+		error = 1;
 	}
-	else
+	
+	if (error)
 	{
-		return 1;
+		std::cout << "A table with this name does not exist:\n";
 	}
 
+	return error;
 }
 
 int QueryParser::parse_condition(std::string condition, std::string &key, ConStruct &con)
 {
-	int index_of_equally;
+	int index_of_equally, error = 0;;
 	std::string syumbol = "=";
 
 	if (std::count(condition.begin(), condition.end(), '=') == 1)
@@ -140,24 +154,28 @@ int QueryParser::parse_condition(std::string condition, std::string &key, ConStr
 
 		if (key.size() == 0 || con.value.size() == 0)
 		{
-			return 1;
+			error = 1;
 		}
 	}
 	else
 	{
-		return 1;
+		error = 1;
 	}
 
-	return 0;
+	if (error)
+	{
+		std::cout << "Incorect condition:\n";
+	}
+
+	return error;
 }
 
 int QueryParser::get_condition(int index, Maptype &condition)
 {
-
 	std::string function;
 	std::string key, item, tmp = "", syumbol;
 	ConStruct con;
-	int item_count, total_count = 0, count = 0;
+	int item_count, total_count = 0, count = 0, error = 0;;
 
 	if (query.size() == index + 1)
 	{
@@ -181,7 +199,8 @@ int QueryParser::get_condition(int index, Maptype &condition)
 			{
 				if (parse_condition(tmp, key, con))
 				{
-					return 1;
+					error = 1;
+					break;
 				}
 				
 				condition[key] = con;
@@ -196,7 +215,8 @@ int QueryParser::get_condition(int index, Maptype &condition)
 					i++;
 					if (function != "AND")
 					{
-						return 1;
+						error = 1;
+						break;
 					}
 				}
 			}
@@ -204,15 +224,20 @@ int QueryParser::get_condition(int index, Maptype &condition)
 
 		if (count > 0)
 		{
-			return 1;
+			error = 1;
 		}
 	}
 	else
 	{
-		return 1;
+		error = 1;
 	}
 
-	return 0;
+	if (error)
+	{
+		std::cout << "Incorect Condition:\n";
+	}
+
+	return error;
 }
 
 int QueryParser::add()
@@ -234,13 +259,13 @@ int QueryParser::add()
 	{
 		Group gr;
 		gr.set();
-		error += file.append(gr);
+		error += file.write(gr);
 	}
 	else if (table_name == "lecturer")
 	{
 		Lecturer le;
 		le.set();
-		error += file.append(le);
+		error += file.write(le);
 	}
 
 	return error;
@@ -269,10 +294,14 @@ int QueryParser::select()
 
 	if (table_name == "group")
 	{
+		if (Group::check_condition(condition))
+		{
+			return 1;
+		}
+
 		std::vector<Group> gr_list;
 		error += file.read(gr_list);
-		Group::check_condition(condition);
-
+		
 		for (int i = 0; i < gr_list.size(); i++)
 		{
 			if (gr_list[i].filter(condition))
@@ -284,19 +313,98 @@ int QueryParser::select()
 	}
 	else if (table_name == "lecturer")
 	{
+		if (Lecturer::check_condition(condition))
+		{
+			return 1;
+		}
+
 		std::vector<Lecturer> le_list;
 		error += file.read(le_list);
+
+		for (int i = 0; i < le_list.size(); i++)
+		{
+			if (le_list[i].filter(condition))
+			{
+				le_list[i].print();
+			}
+
+		}
 	}
 
-	
-
-
-
-	return 0;
+	return error;
 }
 
 int QueryParser::del()
 {
-	return 0;
+	std::string table_name;
+	int index, error = 0;
+	Maptype condition;
+
+	if (get_table_name(table_name, index))
+	{
+		return 1;
+	}
+
+	if (check_table_name(table_name))
+	{
+		return 1;
+	}
+
+	if (get_condition(index, condition))
+	{
+		return 1;
+	}
+
+	if (table_name == "group")
+	{
+		if (Group::check_condition(condition))
+		{
+			return 1;
+		}
+
+		std::vector<Group> gr_list;
+		error += file.read(gr_list);
+
+		remove("group");
+		for (int i = 0; i < gr_list.size(); i++)
+		{
+			if (gr_list[i].filter(condition))
+			{
+				gr_list[i].print();
+			}
+			else
+			{
+				error += file.write(gr_list[i]);
+			}
+
+		}
+	}
+	else if (table_name == "lecturer")
+	{
+		if (Lecturer::check_condition(condition))
+		{
+			return 1;
+		}
+
+		std::vector<Lecturer> le_list;
+		error += file.read(le_list);
+
+		remove("group");
+
+		for (int i = 0; i < le_list.size(); i++)
+		{
+			if (le_list[i].filter(condition))
+			{
+				le_list[i].print();
+			}
+			else
+			{
+				error += file.write(le_list[i]);
+			}
+
+		}
+	}
+
+	return error;
 }
 

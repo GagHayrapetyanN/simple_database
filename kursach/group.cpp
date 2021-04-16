@@ -7,17 +7,15 @@ Group::Group()
 
 int Group::check_key(std::string con)
 {
+	int error = 0;
 	std::string members[3] = { "name", "dep", "student_cout" };
 
 	for (int i = 0; i < 3; i++)
 	{
-		if (members[i] == con)
-		{
-			return 1;
-		}
+		error |= (members[i] == con);
 	}
 
-	return 0;
+	return !(error);
 }
 
 int Group::check_condition(Maptype condition)
@@ -28,7 +26,11 @@ int Group::check_condition(Maptype condition)
 	for (Maptype::iterator it = condition.begin(); it != condition.end(); ++it) {
 		key = it->first;
 
-		error += check_key(key);
+		if (check_key(key))
+		{
+			error++;
+			std::cout << "There is no " << key << " column in the table\n";
+		}
 	}
 
 	return error;
