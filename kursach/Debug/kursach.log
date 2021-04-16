@@ -1,0 +1,15 @@
+﻿  file_manager.cpp
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\file_manager.cpp(11): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+  group.cpp
+  main.cpp
+  query.cpp
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\query.cpp(9): warning C4018: '<': signed/unsigned mismatch
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\query.cpp(73): warning C4018: '<': signed/unsigned mismatch
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\query.cpp(171): warning C4018: '<': signed/unsigned mismatch
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\query.cpp(276): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\file_manager.cpp(93): warning C4715: 'FileManager::read': not all control paths return a value
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\file_manager.cpp(70): warning C4715: 'FileManager::read': not all control paths return a value
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\file_manager.cpp(31): warning C4715: 'FileManager::append': not all control paths return a value
+d:\internet explorer\inistut\magistratura\c++\kursach\kursach\file_manager.cpp(47): warning C4715: 'FileManager::append': not all control paths return a value
+  kursach.vcxproj -> D:\Internet Explorer\Inistut\Magistratura\c++\kursach\Debug\kursach.exe
