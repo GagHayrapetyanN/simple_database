@@ -76,19 +76,40 @@ int Lecturer::first_name_filter(ConStruct con)
 {
 	const char *value_tmp = con.value.c_str();
 
-	return !strcmp(this->first_name, value_tmp);
+	if (con.syumbol == "=")
+	{
+		return !strcmp(this->first_name, value_tmp);
+	}
+	else
+	{
+		return strcmp(this->first_name, value_tmp);
+	}
 }
 
 int Lecturer::last_name_filter(ConStruct con)
 {
 	const char *value_tmp = con.value.c_str();
 
-	return !strcmp(this->last_name, value_tmp);
+	if (con.syumbol == "=")
+	{
+		return !strcmp(this->last_name, value_tmp);
+	}
+	else
+	{
+		return strcmp(this->last_name, value_tmp);
+	}
 }
 
 int Lecturer::dep_filter(ConStruct con)
 {
 	const char *value_tmp = con.value.c_str();
-
-	return !strcmp(this->dep, value_tmp);
+	
+	if (con.syumbol == "=")
+	{
+		return !strcmp(this->dep, value_tmp);
+	}
+	else
+	{
+		return strcmp(this->dep, value_tmp);
+	}
 }

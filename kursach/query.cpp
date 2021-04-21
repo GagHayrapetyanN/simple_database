@@ -154,8 +154,8 @@ int QueryParser::parse_condition(std::string condition, std::string &key, ConStr
 			syumbol = "!=";
 		}
 
-		key = condition.substr(0, index_of_equally);
-		con.value = condition.substr(index_of_equally + 1 + syumbol.size(), condition.size() - key.size() - (2 + syumbol.size()));
+		key = condition.substr(0, index_of_equally - (syumbol.size()-1));
+		con.value = condition.substr(index_of_equally + 2, condition.size() - key.size() - (2 + syumbol.size()));
 		con.syumbol = syumbol;
 
 		if (key.size() == 0 || con.value.size() == 0)

@@ -2,8 +2,8 @@
 
 FileManager::FileManager()
 {
-	create("group");
-	create("lecturer");
+	//create("group");
+	//create("lecturer");
 }
 
 int FileManager::create(std::string file_name)

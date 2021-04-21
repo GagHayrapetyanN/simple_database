@@ -1,5 +1,5 @@
 ﻿  query.cpp
 d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\query.cpp(85): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
 d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\query.cpp(150): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\query.cpp(198): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+d:\internet explorer\inistut\magistratura\c++\simple_database\kursach\query.cpp(204): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
   kursach.vcxproj -> D:\Internet Explorer\Inistut\Magistratura\c++\simple_database\x64\Debug\kursach.exe

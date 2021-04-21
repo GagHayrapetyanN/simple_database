@@ -76,18 +76,40 @@ int Group::name_filter(ConStruct con)
 {
 	const char *value_tmp = con.value.c_str();
 
-	return !strcmp(this->name, value_tmp);
+	if (con.syumbol == "=")
+	{
+		return !strcmp(this->name, value_tmp);
+	}
+	else
+	{
+		return strcmp(this->name, value_tmp);
+	}
 }
 
 int Group::dep_filter(ConStruct con)
 {
 	const char *value_tmp = con.value.c_str();
 
-	return !strcmp(this->dep, value_tmp);
+	if (con.syumbol == "=")
+	{
+		return !strcmp(this->dep, value_tmp);
+	}
+	else
+	{
+		return strcmp(this->dep, value_tmp);
+	}
+	
 }
 
 int Group::student_cout_filter(ConStruct con)
 {
-	return std::to_string(this->student_cout) == con.value;
+	if (con.syumbol == "=")
+	{
+		return std::to_string(this->student_cout) == con.value;
+	}
+	else
+	{
+		return std::to_string(this->student_cout) != con.value;
+	}
 }
 
